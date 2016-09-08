@@ -1,5 +1,6 @@
 package com.example.slorber.moviefiend;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                         mRecyclerView.addOnItemTouchListener(
                                 new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                                     @Override public void onItemClick(View view, int position) {
-
-
+                                        Intent i = new Intent(MainActivity.this,MovieDetailActivity.class);
+                                        startActivity(i);
 
                                     }
                                 })
