@@ -72,19 +72,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             }
         });
 
-        Picasso.with(holder.mImageView.getContext()).load("http://image.tmdb.org/t/p/w500/"+(mDataset.get(position).getBackdropPath()!=null?mDataset.get(position).getBackdropPath():mDataset.get(position).getPosterPath())).resize(dp2px(220,holder), 0).into(holder.mImageView);
+        Picasso.with(holder.mImageView.getContext()).load("http://image.tmdb.org/t/p/w500/"+(mDataset.get(position).getBackdropPath()!=null?mDataset.get(position).getBackdropPath():mDataset.get(position).getPosterPath())).into(holder.mImageView);
 
 
 
     }
-    public int dp2px(int dp,ViewHolder holder) {
-        WindowManager wm = (WindowManager) holder.mImageView.getContext()
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        display.getMetrics(displaymetrics);
-        return (int) (dp * displaymetrics.density + 0.5f);
-    }
+//    public int dp2px(int dp,ViewHolder holder) {
+//        WindowManager wm = (WindowManager) holder.mImageView.getContext()
+//                .getSystemService(Context.WINDOW_SERVICE);
+//        Display display = wm.getDefaultDisplay();
+//        DisplayMetrics displaymetrics = new DisplayMetrics();
+//        display.getMetrics(displaymetrics);
+//        return (int) (dp * displaymetrics.density + 0.5f);
+//    }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
