@@ -21,10 +21,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Created by slorber on 07/09/2016.
  * This adapter class gets a list of Movie objects and sets it to the movie_card layout.
  * The card items are a card image, title and rating.
- *
+ * Created by slorber on 07/09/2016.
  */
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
@@ -44,19 +43,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             mTextView = (TextView)v.findViewById(R.id.card_text);
             mListener = listener;
         }
-        public void setMovie(final Movie m)
+        public void setMovie(final Movie movie)
         {
-            mStarView.setRating(m.getVotes()/2);
-            mTextView.setText(m.getTitle());
+            mStarView.setRating(movie.getVotes()/2);
+            mTextView.setText(movie.getTitle());
             Uri builtUri = Uri.parse(IMAGE_URL)
                     .buildUpon()
-                    .appendEncodedPath(m.getBackdropPath()!=null?m.getBackdropPath():m.getPosterPath())
+                    .appendEncodedPath(movie.getBackdropPath()!=null ? movie.getBackdropPath() : movie.getPosterPath())
                     .build();
-            Picasso.with(mImageView.getContext()).load(builtUri).resize(dp2px(220,mImageView.getContext()), 0).into(mImageView);
+            Picasso.with(mImageView.getContext()).load(builtUri).into(mImageView);
             mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.OnCardClick(m);
+                    mListener.OnCardClick(movie);
                 }
             });
         }
@@ -78,7 +77,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     @Override
     public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
-        // create a new view
+
         FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_card, parent, false);
         ViewHolder vh = new ViewHolder(v,mListener);
         return vh;

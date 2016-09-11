@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
         RequestQueue queue = Volley.newRequestQueue(this);
         Uri builtUri = Uri.parse(URL)
                 .buildUpon()
-                .appendQueryParameter("api_key", "f8546d2d948cd245e6cdb9d4332e6ca6")
+                .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build();
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, builtUri.toString(), null,
                 new Response.Listener<JSONObject>()
