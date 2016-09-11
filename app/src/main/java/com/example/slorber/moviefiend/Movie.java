@@ -1,20 +1,27 @@
 package com.example.slorber.moviefiend;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by slorber on 07/09/2016.
  */
 public class Movie {
 
-    private String title;
-    private String backdrop_path;
-    private String poster_path;
-    private String overview;
-    private float vote_average;
+    @SerializedName("title")
+    private String mTitle;
+    @SerializedName("backdrop_path")
+    private String mBackdropPath;
+    @SerializedName("poster_path")
+    private String mPosterPath;
+    @SerializedName("overview")
+    private String mOverview;
+    @SerializedName("vote_average")
+    private float mVoteAverage;
 
-    public String getTitle(){return title;}
-    public String getBackdropPath(){return backdrop_path;}
-    public String getPosterPath(){return poster_path;}
-    public String getOverview(){return overview;}
-    public float getVotes(){return vote_average;}
+    public String getTitle(){return mTitle;}
+    public String getBackdropPath(){return mBackdropPath;}
+    public String getPosterPath(){return mPosterPath;}
+    public String getOverview(){return mOverview;}
+    public float getVotes(){return mVoteAverage;}
 
 }

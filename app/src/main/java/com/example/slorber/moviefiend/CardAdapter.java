@@ -1,6 +1,7 @@
 package com.example.slorber.moviefiend;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -21,77 +22,83 @@ import java.util.List;
 
 /**
  * Created by slorber on 07/09/2016.
+ * This adapter class gets a list of Movie objects and sets it to the movie_card layout.
+ * The card items are a card image, title and rating.
+ *
  */
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
-    private List<Movie> mDataset;
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public RatingView mStarView;
         public CardView mCardView;
         public ImageView mImageView;
         public TextView mTextView;
-        public ViewHolder(FrameLayout v) {
+        OnCardClickListener mListener;
+        private static String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
+
+        public ViewHolder(FrameLayout v,OnCardClickListener listener) {
             super(v);
             mCardView  = (CardView) v.findViewById(R.id.card);
             mImageView = (ImageView) v.findViewById(R.id.card_image);
             mStarView = (RatingView)v.findViewById(R.id.card_star);
             mTextView = (TextView)v.findViewById(R.id.card_text);
-
+            mListener = listener;
         }
+        public void setMovie(final Movie m)
+        {
+            mStarView.setRating(m.getVotes()/2);
+            mTextView.setText(m.getTitle());
+            Uri builtUri = Uri.parse(IMAGE_URL)
+                    .buildUpon()
+                    .appendEncodedPath(m.getBackdropPath()!=null?m.getBackdropPath():m.getPosterPath())
+                    .build();
+            Picasso.with(mImageView.getContext()).load(builtUri).resize(dp2px(220,mImageView.getContext()), 0).into(mImageView);
+            mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.OnCardClick(m);
+                }
+            });
+        }
+        public int dp2px(int dp,Context context) {
 
+            DisplayMetrics displaymetrics = context.getResources().getDisplayMetrics();
+            return (int) (dp * displaymetrics.density + 0.5f);
+        }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public CardAdapter( List<Movie> myDataset) {
+    private List<Movie> mDataset;
+    private OnCardClickListener mListener;
+
+    public CardAdapter(List<Movie> myDataset,Context context) {
         mDataset = myDataset;
+        mListener = (OnCardClickListener)context;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
         // create a new view
         FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_card, parent, false);
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(v,mListener);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        holder.mStarView.setRating(mDataset.get(position).getVotes()/2);
-        holder.mTextView.setText(mDataset.get(position).getTitle());
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("", "CardView clicked");
-            }
-        });
-
-        Picasso.with(holder.mImageView.getContext()).load("http://image.tmdb.org/t/p/w500/"+(mDataset.get(position).getBackdropPath()!=null?mDataset.get(position).getBackdropPath():mDataset.get(position).getPosterPath())).resize(dp2px(220,holder), 0).into(holder.mImageView);
-
-
-
+        holder.setMovie(mDataset.get(position));
     }
-    public int dp2px(int dp,ViewHolder holder) {
-        WindowManager wm = (WindowManager) holder.mImageView.getContext()
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        display.getMetrics(displaymetrics);
-        return (int) (dp * displaymetrics.density + 0.5f);
-    }
-    // Return the size of your dataset (invoked by the layout manager)
+
+
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
 
-
+    public interface OnCardClickListener {
+        // TODO: Update argument type and name
+        void OnCardClick(Movie movie);
+    }
 
 }
 
