@@ -33,20 +33,17 @@
                 android:layout_height="80dp"
                 android:gravity="center"
                 android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:weightSum="2">
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:id="@+id/card_text"
                     android:gravity="center" />
 
                 <com.github.ornolfr.ratingview.RatingView
                     android:id="@+id/card_star"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     app:drawable_empty="@drawable/ic_star_empty"
                     app:drawable_filled="@drawable/ic_star_filled"
                     app:drawable_half="@drawable/ic_star_half"

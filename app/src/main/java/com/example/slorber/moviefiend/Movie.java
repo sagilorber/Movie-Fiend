@@ -1,7 +1,9 @@
 package com.example.slorber.moviefiend;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -9,18 +11,23 @@ import android.os.Parcelable;
  */
 public class Movie implements Parcelable {
 
-    private String title;
-    private String backdrop_path;
-    private String poster_path;
-    private String overview;
-    private float vote_average;
+    @SerializedName("title")
+    private String mTitle;
+    @SerializedName("backdrop_path")
+    private String mBackdropPath;
+    @SerializedName("poster_path")
+    private String mPosterPath;
+    @SerializedName("overview")
+    private String mOverview;
+    @SerializedName("vote_average")
+    private float mVoteAverage;
 
     protected Movie(Parcel in) {
-        title = in.readString();
-        backdrop_path = in.readString();
-        poster_path = in.readString();
-        overview = in.readString();
-        vote_average = in.readFloat();
+        mTitle = in.readString();
+        mBackdropPath = in.readString();
+        mPosterPath = in.readString();
+        mOverview = in.readString();
+        mVoteAverage = in.readFloat();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -35,11 +42,13 @@ public class Movie implements Parcelable {
         }
     };
 
-    public String getTitle(){return title;}
-    public String getBackdropPath(){return backdrop_path;}
-    public String getPosterPath(){return poster_path;}
-    public String getOverview(){return overview;}
-    public float getVotes(){return vote_average;}
+
+    public String getTitle(){return mTitle;}
+    public String getBackdropPath(){return mBackdropPath;}
+    public String getPosterPath(){return mPosterPath;}
+    public String getOverview(){return mOverview;}
+    public float getVotes(){return mVoteAverage;}
+
 
     @Override
     public int describeContents() {
@@ -48,10 +57,10 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(backdrop_path);
-        dest.writeString(poster_path);
-        dest.writeString(overview);
-        dest.writeFloat(vote_average);
+        dest.writeString(mTitle);
+        dest.writeString(mBackdropPath);
+        dest.writeString(mPosterPath);
+        dest.writeString(mOverview);
+        dest.writeFloat(mVoteAverage);
     }
 }

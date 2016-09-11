@@ -1,6 +1,7 @@
 package com.example.slorber.moviefiend;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,21 +20,25 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CardAdapter.OnCardClickListener{
     MovieContainer mc;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private CardAdapter mAdapter;
-    private static String URL = "http://api.themoviedb.org/3/movie/now_playing?api_key=f8546d2d948cd245e6cdb9d4332e6ca6";
+
+    private static String URL = "http://api.themoviedb.org/3/movie/now_playing";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+        Uri builtUri = Uri.parse(URL)
+                .buildUpon()
+                .appendQueryParameter("api_key", "f8546d2d948cd245e6cdb9d4332e6ca6")
+                .build();
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, builtUri.toString(), null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -41,22 +46,9 @@ public class MainActivity extends AppCompatActivity {
                         Gson g = new Gson();
                         mc = g.fromJson(response.toString(), MovieContainer.class);
                         mLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
-                        mAdapter = new CardAdapter(mc.getMovies());
+                        mAdapter = new CardAdapter(mc.getMovies(),MainActivity.this );
                         mRecyclerView.setLayoutManager(mLayoutManager);
                         mRecyclerView.setAdapter(mAdapter);
-
-                        mRecyclerView.addOnItemTouchListener(
-                                new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
-                                    @Override public void onItemClick(View view, int position) {
-                                        Intent i = new Intent(MainActivity.this,MovieDetailActivity.class);
-                                        Bundle b = new Bundle();
-                                        b.putParcelable("Movie", mc.getMovies().get(position));
-                                        i.putExtras(b);
-                                        startActivity(i);
-
-                                    }
-                                })
-                        );
                     }
                 },
                 new Response.ErrorListener()
@@ -69,8 +61,15 @@ public class MainActivity extends AppCompatActivity {
         );
         queue.add(getRequest);
 
-
     }
 
 
+    @Override
+    public void OnCardClick(Movie movie) {
+        Intent i = new Intent(MainActivity.this,MovieDetailActivity.class);
+        Bundle b = new Bundle();
+        b.putParcelable("Movie", movie);
+        i.putExtras(b);
+        startActivity(i);
+    }
 }
