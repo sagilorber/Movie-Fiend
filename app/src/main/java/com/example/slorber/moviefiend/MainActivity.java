@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,12 +21,12 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements CardAdapter.OnCardClickListener{
+public class MainActivity extends AppCompatActivity implements CardAdapter.OnCardClickListener,OnServerResponseListener{
     MovieContainer mc;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private CardAdapter mAdapter;
-
+    private OnServerResponseListener mListener;
     private static String URL = "http://api.themoviedb.org/3/movie/now_playing";
 
     @Override
@@ -33,34 +34,12 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        RequestQueue queue = Volley.newRequestQueue(this);
         Uri builtUri = Uri.parse(URL)
                 .buildUpon()
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build();
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, builtUri.toString(), null,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Gson g = new Gson();
-                        mc = g.fromJson(response.toString(), MovieContainer.class);
-                        mLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
-                        mAdapter = new CardAdapter(mc.getMovies(),MainActivity.this );
-                        mRecyclerView.setLayoutManager(mLayoutManager);
-                        mRecyclerView.setAdapter(mAdapter);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        );
-        queue.add(getRequest);
-
+        mListener = this;
+        TMDBApi.getHelper().getAringToday(this,builtUri.toString(),mListener);
     }
 
 
@@ -71,5 +50,22 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
         b.putParcelable("Movie", movie);
         i.putExtras(b);
         startActivity(i);
+    }
+
+
+    @Override
+    public void OnServerResponse(JSONObject response) {
+        if(response == null)
+            Toast.makeText(this,"Server error... :(",Toast.LENGTH_LONG).show();
+        else
+        {
+            Gson g = new Gson();
+            mc = g.fromJson(response.toString(), MovieContainer.class);
+            mLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+            mAdapter = new CardAdapter(mc.getMovies(),MainActivity.this );
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+
     }
 }
