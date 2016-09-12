@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build();
         mListener = this;
-        TMDBApi.getHelper().getAringToday(this,builtUri.toString(),mListener);
+        TMDBApi.getHelper().getRequest(this,builtUri.toString(),mListener);
     }
 
 

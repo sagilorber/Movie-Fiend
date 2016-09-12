@@ -1,6 +1,7 @@
 package com.example.slorber.moviefiend;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
@@ -30,7 +31,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         ImageView largeImage = (ImageView)findViewById(R.id.movie_large_image);
         TextView overview = (TextView)findViewById(R.id.overview);
         RatingView star  = (RatingView)findViewById(R.id.movie_star);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -74,5 +74,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void onLabelClick(View v) {
+        Intent intent = new Intent(this,SimilarMoviesActivity.class);
+        intent.putExtra("id",movie.getId());
+        startActivity(intent);
     }
 }

@@ -31,7 +31,8 @@ public class TMDBApi {
     }
 
 
-    public  void getAringToday(Context context, String url,final OnServerResponseListener listener) {
+
+    public  void getRequest(Context context, String url,final OnServerResponseListener listener) {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>()
@@ -52,4 +53,5 @@ public class TMDBApi {
         queue.add(getRequest);
 
     }
+
 }

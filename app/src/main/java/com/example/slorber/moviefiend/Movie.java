@@ -21,6 +21,8 @@ public class Movie implements Parcelable {
     private String mOverview;
     @SerializedName("vote_average")
     private float mVoteAverage;
+    @SerializedName("id")
+    private int mId;
 
     protected Movie(Parcel in) {
         mTitle = in.readString();
@@ -28,6 +30,7 @@ public class Movie implements Parcelable {
         mPosterPath = in.readString();
         mOverview = in.readString();
         mVoteAverage = in.readFloat();
+        mId = in.readInt();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -48,6 +51,7 @@ public class Movie implements Parcelable {
     public String getPosterPath(){return mPosterPath;}
     public String getOverview(){return mOverview;}
     public float getVotes(){return mVoteAverage;}
+    public int getId(){return mId;}
 
 
     @Override
@@ -62,5 +66,6 @@ public class Movie implements Parcelable {
         dest.writeString(mPosterPath);
         dest.writeString(mOverview);
         dest.writeFloat(mVoteAverage);
+        dest.writeInt(mId);
     }
 }
