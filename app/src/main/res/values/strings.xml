@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Movie Fiend</string>
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="tmdb_api_key">f8546d2d948cd245e6cdb9d4332e6ca6</string>
 </resources>
