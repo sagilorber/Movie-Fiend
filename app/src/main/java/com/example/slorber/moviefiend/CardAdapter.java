@@ -27,13 +27,45 @@ import java.util.List;
  */
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
+    private List<Movie> mDataset;
+    private OnCardClickListener mListener;
+
+    public CardAdapter(List<Movie> myDataset,Context context) {
+        mDataset = myDataset;
+        mListener = (OnCardClickListener)context;
+    }
+
+    @Override
+    public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                      int viewType) {
+
+        FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_card, parent, false);
+        ViewHolder vh = new ViewHolder(v,mListener);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.setMovie(mDataset.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDataset.size();
+    }
+
+    public interface OnCardClickListener {
+        void OnCardClick(Movie movie);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public RatingView mStarView;
-        public CardView mCardView;
-        public ImageView mImageView;
-        public TextView mTextView;
-        OnCardClickListener mListener;
-        private static String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
+
+        private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
+        private RatingView mStarView;
+        private CardView mCardView;
+        private ImageView mImageView;
+        private TextView mTextView;
+        private OnCardClickListener mListener;
 
         public ViewHolder(FrameLayout v,OnCardClickListener listener) {
             super(v);
@@ -60,41 +92,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             });
         }
         public int dp2px(int dp,Context context) {
-
             DisplayMetrics displaymetrics = context.getResources().getDisplayMetrics();
             return (int) (dp * displaymetrics.density + 0.5f);
         }
-    }
-
-    private List<Movie> mDataset;
-    private OnCardClickListener mListener;
-
-    public CardAdapter(List<Movie> myDataset,Context context) {
-        mDataset = myDataset;
-        mListener = (OnCardClickListener)context;
-    }
-
-    @Override
-    public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
-
-        FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_card, parent, false);
-        ViewHolder vh = new ViewHolder(v,mListener);
-        return vh;
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setMovie(mDataset.get(position));
-    }
-    @Override
-    public int getItemCount() {
-        return mDataset.size();
-    }
-
-    public interface OnCardClickListener {
-        // TODO: Update argument type and name
-        void OnCardClick(Movie movie);
     }
 
 }

@@ -21,13 +21,17 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements CardAdapter.OnCardClickListener,OnServerResponseListener{
-    MovieContainer mc;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements CardAdapter.OnCardClickListener,TMDBApi.Listener {
+
+    public static final String EXTRA_MOVIE = "Movie";
+    private static final String URL = "http://api.themoviedb.org/3/movie/now_playing";
+    private MovieContainer mc;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private CardAdapter mAdapter;
-    private OnServerResponseListener mListener;
-    private static String URL = "http://api.themoviedb.org/3/movie/now_playing";
+    private TMDBApi.Listener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +43,26 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build();
         mListener = this;
-        TMDBApi.getHelper().getAringToday(this,builtUri.toString(),mListener);
+        TMDBApi.getHelper().getRequest(this,builtUri.toString(),mListener);
     }
-
 
     @Override
     public void OnCardClick(Movie movie) {
-        Intent i = new Intent(MainActivity.this,MovieDetailActivity.class);
+        Intent intent = new Intent(this,MovieDetailActivity.class);
         Bundle b = new Bundle();
-        b.putParcelable("Movie", movie);
-        i.putExtras(b);
-        startActivity(i);
+        b.putParcelable(EXTRA_MOVIE, movie);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
-
     @Override
-    public void OnServerResponse(JSONObject response) {
-        if(response == null)
+    public void onServerResponse(List<Movie> response) {
+        if(response == null){
             Toast.makeText(this,"Server error... :(",Toast.LENGTH_LONG).show();
-        else
-        {
-            Gson g = new Gson();
-            mc = g.fromJson(response.toString(), MovieContainer.class);
-            mLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
-            mAdapter = new CardAdapter(mc.getMovies(),MainActivity.this );
+        }
+        else {
+            mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            mAdapter = new CardAdapter(response,this);
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(mAdapter);
         }
