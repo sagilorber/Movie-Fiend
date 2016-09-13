@@ -20,8 +20,11 @@ import com.github.ornolfr.ratingview.RatingView;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
-    Movie movie;
-    private static String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
+
+
+    private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
+    private Movie movie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,20 +39,20 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Bundle b = this.getIntent().getExtras();
         if (b != null)
-            movie = b.getParcelable("Movie");
+            movie = b.getParcelable(MainActivity.EXTRA_MOVIE);
         getSupportActionBar().setTitle(movie.getTitle());
 
-        Uri BackdropUri = Uri.parse(IMAGE_URL)
+        Uri backdropUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
                 .appendEncodedPath(movie.getBackdropPath()!=null?movie.getBackdropPath():movie.getPosterPath())
                 .build();
-        final Uri PosterUri = Uri.parse(IMAGE_URL)
+        final Uri posterUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
                 .appendEncodedPath(movie.getPosterPath())
                 .build();
-        Picasso.with(image.getContext()).load(BackdropUri).into(image);
+        Picasso.with(image.getContext()).load(backdropUri).into(image);
         image.setBackgroundColor(Color.parseColor("#11000000"));
-        Picasso.with(largeImage.getContext()).load(PosterUri).into(largeImage);
+        Picasso.with(largeImage.getContext()).load(posterUri).into(largeImage);
         largeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +60,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 d.setCancelable(true);
                 d.setContentView(R.layout.dialogbrand_layout);
                 ImageView myImage = (ImageView) d.findViewById(R.id.imageView1);
-                Picasso.with(myImage.getContext()).load(PosterUri).into(myImage);
+                Picasso.with(myImage.getContext()).load(posterUri).into(myImage);
                 d.show();
 
             }

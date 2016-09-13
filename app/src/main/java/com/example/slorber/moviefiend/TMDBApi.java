@@ -14,32 +14,33 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by slorber on 12/09/2016.
  */
 public class TMDBApi {
 
-    private static TMDBApi instance;
+    private static TMDBApi sInstance = new TMDBApi();
+
     public static TMDBApi getHelper()
     {
-        if (instance == null)
-            instance = new TMDBApi();
-
-        return instance;
+        return sInstance;
     }
+
     private TMDBApi() {
     }
 
-
-
-    public  void getRequest(Context context, String url,final OnServerResponseListener listener) {
+    public  void getRequest(Context context, String url,final Listener listener) {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        listener.OnServerResponse(response);
+                        Gson g = new Gson();
+                        MovieContainer mc = g.fromJson(response.toString(), MovieContainer.class);
+                        listener.onServerResponse(mc.getMovies());
                     }
                 },
                 new Response.ErrorListener()
@@ -53,5 +54,7 @@ public class TMDBApi {
         queue.add(getRequest);
 
     }
-
+    public interface Listener {
+        void onServerResponse(List<Movie> response);
+    }
 }
