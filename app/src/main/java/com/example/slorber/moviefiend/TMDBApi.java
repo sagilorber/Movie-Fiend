@@ -40,7 +40,7 @@ public class TMDBApi {
                     public void onResponse(JSONObject response) {
                         Gson g = new Gson();
                         MovieContainer mc = g.fromJson(response.toString(), MovieContainer.class);
-                        listener.onServerResponse(mc.getMovies());
+                        listener.onMoviesFetched(mc.getMovies());
                     }
                 },
                 new Response.ErrorListener()
@@ -55,6 +55,6 @@ public class TMDBApi {
 
     }
     public interface Listener {
-        void onServerResponse(List<Movie> response);
+        void onMoviesFetched(List<Movie> response);
     }
 }

@@ -55,7 +55,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     public interface OnCardClickListener {
-        void OnCardClick(Movie movie);
+        void onCardClick(Movie movie);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -87,7 +87,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.OnCardClick(movie);
+                    mListener.onCardClick(movie);
                 }
             });
         }

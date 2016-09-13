@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-
+    public static final String EXTRA_MOVIE = "Movie";
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private Movie movie;
 
@@ -36,10 +36,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Bundle b = this.getIntent().getExtras();
         if (b != null)
-            movie = b.getParcelable(MainActivity.EXTRA_MOVIE);
+            movie = b.getParcelable(EXTRA_MOVIE);
         getSupportActionBar().setTitle(movie.getTitle());
 
         Uri backdropUri = Uri.parse(IMAGE_URL)
@@ -69,14 +68,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         overview.setText(movie.getOverview());
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
     
 }
