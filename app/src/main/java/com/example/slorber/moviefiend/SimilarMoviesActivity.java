@@ -23,6 +23,7 @@ import java.util.Locale;
 
 public class SimilarMoviesActivity extends AppCompatActivity implements TMDBApi.Listener{
 
+    public static String EXTRA_ID = "id";
     private static final String URL = "http://api.themoviedb.org/3/movie/%d/similar";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -32,7 +33,7 @@ public class SimilarMoviesActivity extends AppCompatActivity implements TMDBApi.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_similar_movies);
-        Uri builtUri = Uri.parse(String.format(Locale.getDefault(),URL, getIntent().getIntExtra(MovieDetailActivity.EXTRA_ID,0)))
+        Uri builtUri = Uri.parse(String.format(Locale.getDefault(),URL, getIntent().getIntExtra(EXTRA_ID,0)))
                 .buildUpon()
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build();
@@ -46,8 +47,7 @@ public class SimilarMoviesActivity extends AppCompatActivity implements TMDBApi.
     }
 
     @Override
-    public void onServerResponse(List<Movie> response) {
-
+    public void onMoviesFetched(List<Movie> response) {
         mPagerAdapter = new ScreenSlidePagerAdapter(this, response);
         mPager.setAdapter(mPagerAdapter);
     }
