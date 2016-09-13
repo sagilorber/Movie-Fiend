@@ -23,8 +23,10 @@
             android:name=".MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SimilarMoviesActivity" >
-        </activity>
+        <activity android:name=".SimilarMoviesActivity"
+                  android:label="Similar movies"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

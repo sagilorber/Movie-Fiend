@@ -6,7 +6,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,35 +19,36 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Locale;
 
-public class SimilarMoviesActivity extends AppCompatActivity implements OnServerResponseListener{
+public class SimilarMoviesActivity extends AppCompatActivity implements TMDBApi.Listener{
 
-    ViewPager mPager;
+    private static final String URL = "http://api.themoviedb.org/3/movie/%d/similar";
+    private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private OnServerResponseListener mListener;
-    private static String URL = "http://api.themoviedb.org/3/movie/%d/similar";
-
+    private TMDBApi.Listener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_similar_movies);
-        Uri builtUri = Uri.parse(String.format(URL, getIntent().getIntExtra("id",0)))
+        Uri builtUri = Uri.parse(String.format(Locale.getDefault(),URL, getIntent().getIntExtra(MovieDetailActivity.EXTRA_ID,0)))
                 .buildUpon()
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build();
         mListener = this;
         mPager = (ViewPager) findViewById(R.id.view_pager);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TMDBApi.getHelper().getRequest(this,builtUri.toString(),mListener);
 
     }
 
     @Override
-    public void OnServerResponse(JSONObject response) {
+    public void onServerResponse(List<Movie> response) {
 
-        Gson g = new Gson();
-        MovieContainer mc = g.fromJson(response.toString(), MovieContainer.class);
-        mPagerAdapter = new ScreenSlidePagerAdapter(this, mc.getMovies());
+        mPagerAdapter = new ScreenSlidePagerAdapter(this, response);
         mPager.setAdapter(mPagerAdapter);
     }
 
@@ -66,8 +69,6 @@ public class SimilarMoviesActivity extends AppCompatActivity implements OnServer
             collection.addView(movieDetailsView);
             return movieDetailsView;
 
-
-
         }
         @Override
         public void destroyItem(ViewGroup collection, int position, Object view) {
@@ -85,6 +86,14 @@ public class SimilarMoviesActivity extends AppCompatActivity implements OnServer
         }
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
 }
 

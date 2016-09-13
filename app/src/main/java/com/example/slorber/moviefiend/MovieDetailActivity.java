@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-
+    public static String EXTRA_ID = "id";
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private Movie movie;
 
@@ -36,7 +36,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         RatingView star  = (RatingView)findViewById(R.id.movie_star);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Bundle b = this.getIntent().getExtras();
         if (b != null)
             movie = b.getParcelable(MainActivity.EXTRA_MOVIE);
@@ -80,7 +79,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
     public void onLabelClick(View v) {
         Intent intent = new Intent(this,SimilarMoviesActivity.class);
-        intent.putExtra("id",movie.getId());
+        intent.putExtra(EXTRA_ID,movie.getId());
         startActivity(intent);
     }
 }
