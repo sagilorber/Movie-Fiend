@@ -32,4 +32,5 @@ dependencies {
     compile 'com.github.ornolfr:rating-view:0.1.2@aar'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'me.relex:circleindicator:1.2.1@aar'
 }

@@ -69,7 +69,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         overview.setText(movie.getOverview());
 
     }
-    
+
     public void onLabelClick(View v) {
         Intent intent = new Intent(this,SimilarMoviesActivity.class);
         intent.putExtra(SimilarMoviesActivity.EXTRA_ID,movie.getId());

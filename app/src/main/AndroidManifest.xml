@@ -23,6 +23,7 @@
             android:name=".MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
             android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -30,7 +31,12 @@
         </activity>
         <activity android:name=".SimilarMoviesActivity"
                   android:label="Similar movies"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:parentActivityName=".MovieDetailActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MovieDetailActivity" />
+        </activity>
     </application>
 
 </manifest>

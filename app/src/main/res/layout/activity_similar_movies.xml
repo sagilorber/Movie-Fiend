@@ -21,12 +21,36 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
+    <ViewFlipper
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/view_pager"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        android:id="@+id/view_flipper">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/view_pager"
+                android:layout_marginTop="?attr/actionBarSize"/>
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="bottom"
+                android:background="@drawable/gradient_bg"/>
+        </FrameLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="No similar movies....:("
+            android:id="@+id/textView"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:gravity="center"/>
+    </ViewFlipper>
 
 
 </android.support.design.widget.CoordinatorLayout>

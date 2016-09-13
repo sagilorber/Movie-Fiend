@@ -2,6 +2,8 @@ package com.example.slorber.moviefiend;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
 
@@ -21,35 +25,54 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Locale;
 
-public class SimilarMoviesActivity extends AppCompatActivity implements TMDBApi.Listener{
+import me.relex.circleindicator.CircleIndicator;
+
+public class SimilarMoviesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>{
 
     public static String EXTRA_ID = "id";
     private static final String URL = "http://api.themoviedb.org/3/movie/%d/similar";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private TMDBApi.Listener mListener;
+    private CircleIndicator mIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_similar_movies);
-        Uri builtUri = Uri.parse(String.format(Locale.getDefault(),URL, getIntent().getIntExtra(EXTRA_ID,0)))
-                .buildUpon()
-                .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
-                .build();
-        mListener = this;
         mPager = (ViewPager) findViewById(R.id.view_pager);
+        mIndicator = (CircleIndicator) findViewById(R.id.indicator);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TMDBApi.getHelper().getRequest(this,builtUri.toString(),mListener);
+        getSupportLoaderManager().initLoader(1, null, this);
 
     }
 
     @Override
-    public void onMoviesFetched(List<Movie> response) {
-        mPagerAdapter = new ScreenSlidePagerAdapter(this, response);
-        mPager.setAdapter(mPagerAdapter);
+    public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
+        return new GetMoviesLoader(this,String.format(Locale.getDefault(),URL, getIntent().getIntExtra(EXTRA_ID,0)));
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
+        if(data == null){
+            Toast.makeText(this,"Server error... :(",Toast.LENGTH_LONG).show();
+        }
+        else if(data.size()==0)
+        {
+            ((ViewFlipper)findViewById(R.id.view_flipper)).showNext();
+        }
+        else {
+            mPagerAdapter = new ScreenSlidePagerAdapter(this, data);
+            mPager.setAdapter(mPagerAdapter);
+            mIndicator.setViewPager(mPager);
+        }
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Movie>> loader) {
+
     }
 
     private class ScreenSlidePagerAdapter extends PagerAdapter {
@@ -85,15 +108,6 @@ public class SimilarMoviesActivity extends AppCompatActivity implements TMDBApi.
             return arg0 == ((View) arg1);
         }
 
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
 
