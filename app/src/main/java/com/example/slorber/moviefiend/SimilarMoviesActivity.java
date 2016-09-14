@@ -88,6 +88,7 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
 
             LayoutInflater inflater = LayoutInflater.from(mContext);
             MovieDetailsView movieDetailsView = (MovieDetailsView) inflater.inflate(R.layout.movie_details, collection, false);
+            movieDetailsView.removeView();
             movieDetailsView.setItem(mMovieList.get(position));
             collection.addView(movieDetailsView);
             return movieDetailsView;

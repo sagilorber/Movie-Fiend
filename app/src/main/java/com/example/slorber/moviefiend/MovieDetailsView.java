@@ -9,19 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.ornolfr.ratingview.RatingView;
 import com.squareup.picasso.Picasso;
 
 /**
+ * This view includes the movie poster, rating and overview.
+ * after inflated setItem is called with the movie object to assign the content.
+ * if called from similar movies screen the the "similar" link is hidden.
  * Created by slorber on 12/09/2016.
  */
-public class MovieDetailsView extends RelativeLayout {
+public class MovieDetailsView extends ScrollView {
+
+    private static String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private TextView mDescriptionTextView;
     private ImageView mImageView;
     private RatingView mStar;
-    private static String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
 
     public static MovieDetailsView inflate(ViewGroup parent) {
         MovieDetailsView itemView = (MovieDetailsView) LayoutInflater.from(parent.getContext())
@@ -48,13 +53,16 @@ public class MovieDetailsView extends RelativeLayout {
         mDescriptionTextView = (TextView) findViewById(R.id.overview);
         mImageView = (ImageView) findViewById(R.id.movie_large_image);
         mStar = (RatingView)findViewById(R.id.movie_star);
+    }
+
+    public void removeView(){
         ((TextView)findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
     }
 
     public void setItem(Movie movie) {
 
         mDescriptionTextView.setText(movie.getOverview());
-        mStar.setRating(movie.getVotes());
+        mStar.setRating(movie.getVotes()/2);
         final Uri PosterUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
                 .appendEncodedPath(movie.getPosterPath())

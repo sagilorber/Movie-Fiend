@@ -49,8 +49,18 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+        <com.example.slorber.moviefiend.MovieDetailsView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            />
+    </android.support.v4.widget.NestedScrollView>
 
-    <include layout="@layout/movie_details_child"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

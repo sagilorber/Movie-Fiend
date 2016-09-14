@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    >
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="8dp">
-        <ImageView
-            android:id="@+id/movie_large_image"
+    android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-        <com.github.ornolfr.ratingview.RatingView
-            android:id="@+id/movie_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:drawable_empty="@drawable/ic_star_empty"
-            app:drawable_filled="@drawable/ic_star_filled"
-            app:drawable_half="@drawable/ic_star_half"
-            app:drawable_margin="4dp"
-            app:drawable_size="14dp"
-            app:is_indicator="false"
-            app:max_count="5"
-            app:rating="3.5"
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:lineSpacingExtra="8dp"
-            android:id="@+id/overview"
-            android:padding="@dimen/activity_horizontal_margin"
-            />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:gravity="center"
-        android:id="@+id/similar_movies_label"
-        android:onClick="onLabelClick"
-        android:clickable="true"
-        android:text="@string/similar_movies_link"/>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+            android:gravity="center"
+            android:paddingBottom="?attr/actionBarSize">
+            <ImageView
+                android:id="@+id/movie_large_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <com.github.ornolfr.ratingview.RatingView
+                android:id="@+id/movie_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawable_empty="@drawable/ic_star_empty"
+                app:drawable_filled="@drawable/ic_star_filled"
+                app:drawable_half="@drawable/ic_star_half"
+                app:drawable_margin="4dp"
+                app:drawable_size="14dp"
+                app:is_indicator="false"
+                app:max_count="5"
+                app:rating="3.5"
+                android:orientation="vertical"
+                android:padding="16dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:lineSpacingExtra="8dp"
+                android:id="@+id/overview"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                android:id="@+id/similar_movies_label"
+                android:onClick="onLabelClick"
+                android:clickable="true"
+                android:text="@string/similar_movies_link"/>
+        </LinearLayout>
+</merge>
