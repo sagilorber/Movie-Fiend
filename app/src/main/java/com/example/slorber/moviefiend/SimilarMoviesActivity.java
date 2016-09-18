@@ -29,7 +29,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class SimilarMoviesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>{
 
-    public static String EXTRA_ID = "id";
+    public static final String EXTRA_ID = "id";
     private static final String URL = "http://api.themoviedb.org/3/movie/%d/similar";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -41,8 +41,7 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
         setContentView(R.layout.activity_similar_movies);
         mPager = (ViewPager) findViewById(R.id.view_pager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportLoaderManager().initLoader(1, null, this);
 
@@ -57,17 +56,16 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         if(data == null){
             Toast.makeText(this,"Server error... :(",Toast.LENGTH_LONG).show();
+            return;
         }
         else if(data.size()==0)
         {
             ((ViewFlipper)findViewById(R.id.view_flipper)).showNext();
+            return;
         }
-        else {
-            mPagerAdapter = new ScreenSlidePagerAdapter(this, data);
-            mPager.setAdapter(mPagerAdapter);
-            mIndicator.setViewPager(mPager);
-        }
-
+        mPagerAdapter = new ScreenSlidePagerAdapter(this, data);
+        mPager.setAdapter(mPagerAdapter);
+        mIndicator.setViewPager(mPager);
     }
 
     @Override
@@ -88,8 +86,8 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
 
             LayoutInflater inflater = LayoutInflater.from(mContext);
             MovieDetailsView movieDetailsView = (MovieDetailsView) inflater.inflate(R.layout.movie_details, collection, false);
-            movieDetailsView.removeView();
-            movieDetailsView.setItem(mMovieList.get(position));
+            movieDetailsView.hideSimilarMovieLink();
+            movieDetailsView.setMovie(mMovieList.get(position));
             collection.addView(movieDetailsView);
             return movieDetailsView;
 
@@ -106,7 +104,7 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
 
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == ((View) arg1);
+            return arg0 == arg1;
         }
 
     }

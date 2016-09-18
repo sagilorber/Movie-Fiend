@@ -30,11 +30,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         ImageView image = (ImageView)findViewById(R.id.movie_image);
         MovieDetailsView movieDetailsView = (MovieDetailsView)findViewById(R.id.movie_details_view);
         RatingView ratingView = (RatingView)findViewById(R.id.rating_view);
-        setSupportActionBar(toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = this.getIntent().getExtras();
         if (b != null)
@@ -46,12 +45,12 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .build();
         Picasso.with(image.getContext()).load(backdropUri).into(image);
         image.setBackgroundColor(Color.parseColor("#11000000"));
-        movieDetailsView.setItem(movie);
+        movieDetailsView.setMovie(movie);
         ratingView.setRating(movie.getVotes()/2);
 
     }
 
-    public void onLabelClick(View v) {
+    public void onSimilarMoviesLabelClick(View v) {
         Intent intent = new Intent(this,SimilarMoviesActivity.class);
         intent.putExtra(SimilarMoviesActivity.EXTRA_ID,movie.getId());
         startActivity(intent);

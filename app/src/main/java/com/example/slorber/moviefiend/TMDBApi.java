@@ -47,7 +47,9 @@ public class TMDBApi {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         Log.d("Error.Response", error.toString());
+                        listener.onMoviesFetched(null);
                     }
                 }
         );
