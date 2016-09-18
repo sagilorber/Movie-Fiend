@@ -69,12 +69,10 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         if(data == null){
             Toast.makeText(this,"Server error... :(",Toast.LENGTH_LONG).show();
+            return;
         }
-        else {
             mAdapter = new CardAdapter(data,this);
             mRecyclerView.setAdapter(mAdapter);
-
-        }
     }
 
     @Override

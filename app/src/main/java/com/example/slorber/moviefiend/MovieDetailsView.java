@@ -23,16 +23,11 @@ import com.squareup.picasso.Picasso;
  */
 public class MovieDetailsView extends ScrollView {
 
-    private static String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
+    private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private TextView mDescriptionTextView;
     private ImageView mImageView;
     private RatingView mStar;
 
-    public static MovieDetailsView inflate(ViewGroup parent) {
-        MovieDetailsView itemView = (MovieDetailsView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_details, parent, false);
-        return itemView;
-    }
 
     public MovieDetailsView(Context c) {
         this(c, null);
@@ -55,11 +50,11 @@ public class MovieDetailsView extends ScrollView {
         mStar = (RatingView)findViewById(R.id.movie_star);
     }
 
-    public void removeView(){
+    public void hideSimilarMovieLink(){
         ((TextView)findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
     }
 
-    public void setItem(Movie movie) {
+    public void setMovie(Movie movie) {
 
         mDescriptionTextView.setText(movie.getOverview());
         mStar.setRating(movie.getVotes()/2);

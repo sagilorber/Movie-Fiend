@@ -2,7 +2,7 @@
 
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <LinearLayout
@@ -21,14 +21,14 @@
                 android:id="@+id/movie_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:drawable_empty="@drawable/ic_star_empty"
-                app:drawable_filled="@drawable/ic_star_filled"
-                app:drawable_half="@drawable/ic_star_half"
-                app:drawable_margin="4dp"
-                app:drawable_size="14dp"
-                app:is_indicator="false"
-                app:max_count="5"
-                app:rating="3.5"
+                tools:drawable_empty="@drawable/ic_star_empty"
+                tools:drawable_filled="@drawable/ic_star_filled"
+                tools:drawable_half="@drawable/ic_star_half"
+                tools:drawable_margin="4dp"
+                tools:drawable_size="14dp"
+                tools:is_indicator="false"
+                tools:max_count="5"
+                tools:rating="3.5"
                 android:orientation="vertical"
                 android:padding="16dp"
                 />
@@ -47,7 +47,7 @@
                 android:padding="8dp"
                 android:gravity="center"
                 android:id="@+id/similar_movies_label"
-                android:onClick="onLabelClick"
+                android:onClick="onSimilarMoviesLabelClick"
                 android:clickable="true"
                 android:text="@string/similar_movies_link"/>
         </LinearLayout>
