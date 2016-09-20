@@ -3,6 +3,7 @@ package com.example.slorber.moviefiend;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 
@@ -46,12 +47,29 @@ public class Movie implements Parcelable {
     };
 
 
-    public String getTitle(){return mTitle;}
-    public String getBackdropPath(){return mBackdropPath;}
-    public String getPosterPath(){return mPosterPath;}
-    public String getOverview(){return mOverview;}
-    public float getVotes(){return mVoteAverage;}
-    public int getId(){return mId;}
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getBackdropPath() {
+        return mBackdropPath;
+    }
+
+    public String getPosterPath() {
+        return mPosterPath;
+    }
+
+    public String getOverview() {
+        return mOverview;
+    }
+
+    public float getVotes() {
+        return mVoteAverage;
+    }
+
+    public int getId() {
+        return mId;
+    }
 
 
     @Override

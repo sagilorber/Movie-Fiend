@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
     }
 
     private void checkDeepLink(Intent intent,List <Movie> data) {
-        if (intent.getExtras() != null && intent.getData().getLastPathSegment().contains("-")) {
+        if (intent.getData() != null && intent.getData().getLastPathSegment().contains("-")) {
             String[] parts = intent.getData().getLastPathSegment().split("-");
             int deepLinkMovieId = Integer.parseInt(parts[0]);
             for (int i = 0; i < data.size(); i++) {
