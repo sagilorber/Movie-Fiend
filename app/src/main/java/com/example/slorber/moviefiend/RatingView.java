@@ -12,6 +12,7 @@
 package com.example.slorber.moviefiend;
 
 import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.media.Rating;
 import android.net.Uri;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.StringTokenizer;
+
 /**
  * TODO: Write Javadoc for RatingView.
  *
@@ -40,6 +44,7 @@ import com.squareup.picasso.Picasso;
 public class RatingView extends RelativeLayout{
 
     private RatingBar mStar;
+    private TextView mTextView;
 
     public static MovieDetailsView inflate(ViewGroup parent) {
         MovieDetailsView itemView = (MovieDetailsView) LayoutInflater.from(parent.getContext())
@@ -64,6 +69,7 @@ public class RatingView extends RelativeLayout{
     private void setupChildren() {
 
         mStar = (RatingBar)findViewById(R.id.movie_star);
+        mTextView = (TextView)findViewById(R.id.rating_view_text);
     }
 
 
@@ -86,7 +92,25 @@ public class RatingView extends RelativeLayout{
 
         ObjectAnimator anim = ObjectAnimator.ofFloat(mStar, "rating",0f, (float)newRating);
         anim.setDuration(animTime);
+        animateTextView(0, (float)newRating, mTextView,animTime);
+
         anim.start();
+
+    }
+    public void animateTextView(float initialValue, float finalValue, final TextView  textview, int animTime) {
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(initialValue, finalValue);
+        valueAnimator.setDuration(animTime);
+
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+
+                textview.setText(String.format("%.1f", valueAnimator.getAnimatedValue()).toString()+"/5");
+
+            }
+        });
+        valueAnimator.start();
 
     }
     public RatingBar getRatingView () {
