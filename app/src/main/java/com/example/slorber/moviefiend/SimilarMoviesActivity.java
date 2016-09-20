@@ -27,10 +27,10 @@ import java.util.Locale;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class SimilarMoviesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>{
+public class SimilarMoviesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
     public static final String EXTRA_ID = "id";
-    private static final String URL = "http://api.themoviedb.org/3/movie/%d/similar";
+    private static final String URL = "http://api.themoviedb.org";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private CircleIndicator mIndicator;
@@ -49,18 +49,23 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        return new GetMoviesLoader(this,String.format(Locale.getDefault(),URL, getIntent().getIntExtra(EXTRA_ID,0)));
+        return new GetMoviesLoader(this, Uri.parse(URL)
+                .buildUpon()
+                .appendPath("3")
+                .appendPath("movie")
+                .appendPath(String.valueOf(getIntent().getIntExtra(EXTRA_ID, 0)))
+                .appendPath("similar")
+                .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
+                .build().toString());
     }
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
-        if(data == null){
-            Toast.makeText(this,"Server error... :(",Toast.LENGTH_LONG).show();
+        if (data == null) {
+            Toast.makeText(this, "Server error... :(", Toast.LENGTH_LONG).show();
             return;
-        }
-        else if(data.size()==0)
-        {
-            ((ViewFlipper)findViewById(R.id.view_flipper)).showNext();
+        } else if (data.size() == 0) {
+            ((ViewFlipper) findViewById(R.id.view_flipper)).showNext();
             return;
         }
         mPagerAdapter = new ScreenSlidePagerAdapter(this, data);
@@ -77,7 +82,8 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
 
         private Context mContext;
         private List<Movie> mMovieList;
-        public ScreenSlidePagerAdapter(Context context,List<Movie> movieList) {
+
+        public ScreenSlidePagerAdapter(Context context, List<Movie> movieList) {
             mContext = context;
             mMovieList = movieList;
         }
@@ -92,6 +98,7 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
             return movieDetailsView;
 
         }
+
         @Override
         public void destroyItem(ViewGroup collection, int position, Object view) {
             collection.removeView((View) view);

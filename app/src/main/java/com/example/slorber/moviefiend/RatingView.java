@@ -41,7 +41,7 @@ import java.util.StringTokenizer;
  *
  * @author slorber
  */
-public class RatingView extends RelativeLayout{
+public class RatingView extends RelativeLayout {
 
     private RatingBar mStar;
     private TextView mTextView;
@@ -68,8 +68,8 @@ public class RatingView extends RelativeLayout{
 
     private void setupChildren() {
 
-        mStar = (RatingBar)findViewById(R.id.movie_star);
-        mTextView = (TextView)findViewById(R.id.rating_view_text);
+        mStar = (RatingBar) findViewById(R.id.movie_star);
+        mTextView = (TextView) findViewById(R.id.rating_view_text);
     }
 
 
@@ -77,11 +77,10 @@ public class RatingView extends RelativeLayout{
 
         int color = Color.RED;
         int animTime = 1000;
-        if(2<newRating && newRating<3){
+        if (2 < newRating && newRating < 3) {
             color = Color.YELLOW;
             animTime = 1200;
-        }
-        else if(newRating>3){
+        } else if (newRating > 3) {
             color = Color.GREEN;
             animTime = 1500;
         }
@@ -90,14 +89,15 @@ public class RatingView extends RelativeLayout{
         stars.getDrawable(2).setColorFilter(color, PorterDuff.Mode.SRC_IN);
         stars.getDrawable(1).setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-        ObjectAnimator anim = ObjectAnimator.ofFloat(mStar, "rating",0f, (float)newRating);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(mStar, "rating", 0f, (float) newRating);
         anim.setDuration(animTime);
-        animateTextView(0, (float)newRating, mTextView,animTime);
+        animateTextView(0, (float) newRating, mTextView, animTime);
 
         anim.start();
 
     }
-    public void animateTextView(float initialValue, float finalValue, final TextView  textview, int animTime) {
+
+    public void animateTextView(float initialValue, float finalValue, final TextView textview, int animTime) {
 
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(initialValue, finalValue);
         valueAnimator.setDuration(animTime);
@@ -106,14 +106,15 @@ public class RatingView extends RelativeLayout{
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
 
-                textview.setText(String.format("%.1f", valueAnimator.getAnimatedValue()).toString()+"/5");
+                textview.setText(String.format("%.1f", valueAnimator.getAnimatedValue()).toString() + "/5");
 
             }
         });
         valueAnimator.start();
 
     }
-    public RatingBar getRatingView () {
+
+    public RatingBar getRatingView() {
         return mStar;
     }
 

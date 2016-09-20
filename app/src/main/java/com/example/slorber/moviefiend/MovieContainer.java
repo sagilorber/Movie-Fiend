@@ -8,5 +8,8 @@ import java.util.List;
 public class MovieContainer {
 
     private List<Movie> results;
-    public List<Movie> getMovies(){return results;}
+
+    public List<Movie> getMovies() {
+        return results;
+    }
 }

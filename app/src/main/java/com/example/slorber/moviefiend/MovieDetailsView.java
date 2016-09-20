@@ -49,10 +49,11 @@ public class MovieDetailsView extends ScrollView {
 
         mDescriptionTextView = (TextView) findViewById(R.id.overview);
         mImageView = (ImageView) findViewById(R.id.movie_large_image);
+
     }
 
-    public void hideSimilarMovieLink(){
-        ((TextView)findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
+    public void hideSimilarMovieLink() {
+        ((TextView) findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
     }
 
     public void setMovie(Movie movie) {
@@ -74,12 +75,12 @@ public class MovieDetailsView extends ScrollView {
                 d.show();
 
             }
-        });    }
-
-    public ImageView getImageView () {
-        return mImageView;
+        });
     }
 
+    public ImageView getImageView() {
+        return mImageView;
+    }
 
 
     public TextView getDescriptionTextView() {

@@ -23,11 +23,12 @@ import java.util.List;
  *
  * @author slorber
  */
-public class GetMoviesLoader extends Loader<List<Movie>> implements TMDBApi.Listener{
+public class GetMoviesLoader extends Loader<List<Movie>> implements TMDBApi.Listener {
 
     private List<Movie> mMovieList;
     private String mUrl;
-    public GetMoviesLoader(Context context,String url) {
+
+    public GetMoviesLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
@@ -44,10 +45,7 @@ public class GetMoviesLoader extends Loader<List<Movie>> implements TMDBApi.List
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        TMDBApi.getHelper().getRequest(getContext(), Uri.parse(mUrl)
-                .buildUpon()
-                .appendQueryParameter("api_key", getContext().getString(R.string.tmdb_api_key))
-                .build().toString(),this);
+        TMDBApi.getHelper().getRequest(getContext(), mUrl, this);
     }
 
     @Override
