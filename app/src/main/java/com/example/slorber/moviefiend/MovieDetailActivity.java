@@ -36,12 +36,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = this.getIntent().getExtras();
-        if (b != null)
+        if (b != null) {
             movie = b.getParcelable(EXTRA_MOVIE);
+        }
         getSupportActionBar().setTitle(movie.getTitle());
         Uri backdropUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
-                .appendEncodedPath(movie.getBackdropPath()!=null?movie.getBackdropPath():movie.getPosterPath())
+                .appendEncodedPath(movie.getBackdropPath() != null ? movie.getBackdropPath() : movie.getPosterPath())
                 .build();
         Picasso.with(image.getContext()).load(backdropUri).into(image);
         image.setBackgroundColor(Color.parseColor("#11000000"));
@@ -51,8 +52,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void onSimilarMoviesLabelClick(View v) {
-        Intent intent = new Intent(this,SimilarMoviesActivity.class);
-        intent.putExtra(SimilarMoviesActivity.EXTRA_ID,movie.getId());
+        Intent intent = new Intent(this, SimilarMoviesActivity.class);
+        intent.putExtra(SimilarMoviesActivity.EXTRA_ID, movie.getId());
         startActivity(intent);
     }
 
