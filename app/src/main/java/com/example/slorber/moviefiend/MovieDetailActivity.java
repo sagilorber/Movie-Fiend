@@ -30,20 +30,21 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        ImageView image = (ImageView)findViewById(R.id.movie_image);
-        ImageView largeImage = (ImageView)findViewById(R.id.movie_large_image);
-        TextView overview = (TextView)findViewById(R.id.overview);
-        RatingView star  = (RatingView)findViewById(R.id.movie_star);
+        ImageView image = (ImageView) findViewById(R.id.movie_image);
+        ImageView largeImage = (ImageView) findViewById(R.id.movie_large_image);
+        TextView overview = (TextView) findViewById(R.id.overview);
+        RatingView star = (RatingView) findViewById(R.id.movie_star);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = this.getIntent().getExtras();
-        if (b != null)
+        if (b != null) {
             movie = b.getParcelable(EXTRA_MOVIE);
+        }
         getSupportActionBar().setTitle(movie.getTitle());
 
         Uri backdropUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
-                .appendEncodedPath(movie.getBackdropPath()!=null?movie.getBackdropPath():movie.getPosterPath())
+                .appendEncodedPath(movie.getBackdropPath() != null ? movie.getBackdropPath() : movie.getPosterPath())
                 .build();
         final Uri posterUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
@@ -64,14 +65,14 @@ public class MovieDetailActivity extends AppCompatActivity {
 
             }
         });
-        star.setRating(movie.getVotes()/2);
+        star.setRating(movie.getVotes() / 2);
         overview.setText(movie.getOverview());
 
     }
 
     public void onSimilarMoviesLabelClick(View v) {
-        Intent intent = new Intent(this,SimilarMoviesActivity.class);
-        intent.putExtra(SimilarMoviesActivity.EXTRA_ID,movie.getId());
+        Intent intent = new Intent(this, SimilarMoviesActivity.class);
+        intent.putExtra(SimilarMoviesActivity.EXTRA_ID, movie.getId());
         startActivity(intent);
     }
 

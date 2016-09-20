@@ -30,15 +30,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private List<Movie> mDataset;
     private OnCardClickListener mListener;
 
-    public CardAdapter(List<Movie> myDataset,Context context) {
+    public CardAdapter(List<Movie> myDataset, Context context) {
         mDataset = myDataset;
-        mListener = (OnCardClickListener)context;
+        mListener = (OnCardClickListener) context;
     }
 
     @Override
     public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_card, parent, false);
-        ViewHolder vh = new ViewHolder(v,mListener);
+        ViewHolder vh = new ViewHolder(v, mListener);
         return vh;
     }
 
@@ -65,21 +65,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         private TextView mTextView;
         private OnCardClickListener mListener;
 
-        public ViewHolder(FrameLayout v,OnCardClickListener listener) {
+        public ViewHolder(FrameLayout v, OnCardClickListener listener) {
             super(v);
-            mCardView  = (CardView) v.findViewById(R.id.card);
+            mCardView = (CardView) v.findViewById(R.id.card);
             mImageView = (ImageView) v.findViewById(R.id.card_image);
-            mStarView = (RatingView)v.findViewById(R.id.card_star);
-            mTextView = (TextView)v.findViewById(R.id.card_text);
+            mStarView = (RatingView) v.findViewById(R.id.card_star);
+            mTextView = (TextView) v.findViewById(R.id.card_text);
             mListener = listener;
         }
-        public void setMovie(final Movie movie)
-        {
-            mStarView.setRating(movie.getVotes()/2);
+
+        public void setMovie(final Movie movie) {
+            mStarView.setRating(movie.getVotes() / 2);
             mTextView.setText(movie.getTitle());
             Uri builtUri = Uri.parse(IMAGE_URL)
                     .buildUpon()
-                    .appendEncodedPath(movie.getBackdropPath()!=null ? movie.getBackdropPath() : movie.getPosterPath())
+                    .appendEncodedPath(movie.getBackdropPath() != null ? movie.getBackdropPath() : movie.getPosterPath())
                     .build();
             Picasso.with(mImageView.getContext()).load(builtUri).into(mImageView);
             mCardView.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +89,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 }
             });
         }
-        public int dp2px(int dp,Context context) {
+
+        public int dp2px(int dp, Context context) {
             DisplayMetrics displaymetrics = context.getResources().getDisplayMetrics();
             return (int) (dp * displaymetrics.density + 0.5f);
         }

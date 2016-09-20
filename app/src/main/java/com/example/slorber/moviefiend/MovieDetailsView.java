@@ -47,17 +47,17 @@ public class MovieDetailsView extends ScrollView {
 
         mDescriptionTextView = (TextView) findViewById(R.id.overview);
         mImageView = (ImageView) findViewById(R.id.movie_large_image);
-        mStar = (RatingView)findViewById(R.id.movie_star);
+        mStar = (RatingView) findViewById(R.id.movie_star);
     }
 
-    public void hideSimilarMovieLink(){
-        ((TextView)findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
+    public void hideSimilarMovieLink() {
+        ((TextView) findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
     }
 
     public void setMovie(Movie movie) {
 
         mDescriptionTextView.setText(movie.getOverview());
-        mStar.setRating(movie.getVotes()/2);
+        mStar.setRating(movie.getVotes() / 2);
         final Uri PosterUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
                 .appendEncodedPath(movie.getPosterPath())
@@ -65,10 +65,9 @@ public class MovieDetailsView extends ScrollView {
         Picasso.with(mImageView.getContext()).load(PosterUri).into(mImageView);
     }
 
-    public ImageView getImageView () {
+    public ImageView getImageView() {
         return mImageView;
     }
-
 
 
     public TextView getDescriptionTextView() {

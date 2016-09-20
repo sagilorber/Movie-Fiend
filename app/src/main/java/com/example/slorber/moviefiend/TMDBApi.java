@@ -23,19 +23,17 @@ public class TMDBApi {
 
     private static TMDBApi sInstance = new TMDBApi();
 
-    public static TMDBApi getHelper()
-    {
+    public static TMDBApi getHelper() {
         return sInstance;
     }
 
     private TMDBApi() {
     }
 
-    public  void getRequest(Context context, String url,final Listener listener) {
+    public void getRequest(Context context, String url, final Listener listener) {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>()
-                {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Gson g = new Gson();
@@ -43,8 +41,7 @@ public class TMDBApi {
                         listener.onMoviesFetched(mc.getMovies());
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
@@ -56,6 +53,7 @@ public class TMDBApi {
         queue.add(getRequest);
 
     }
+
     public interface Listener {
         void onMoviesFetched(List<Movie> response);
     }
