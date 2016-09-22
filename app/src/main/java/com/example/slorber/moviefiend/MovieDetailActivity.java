@@ -31,7 +31,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        ImageView image = (ImageView) findViewById(R.id.movie_image);
+        ImageView imageView = (ImageView) findViewById(R.id.movie_image);
         MovieDetailsView movieDetailsView = (MovieDetailsView) findViewById(R.id.movie_details_view);
         RatingView ratingView = (RatingView) findViewById(R.id.rating_view);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -45,8 +45,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .buildUpon()
                 .appendEncodedPath(movie.getBackdropPath() != null ? movie.getBackdropPath() : movie.getPosterPath())
                 .build();
-        Picasso.with(image.getContext()).load(backdropUri).into(image);
-        image.setBackgroundColor(Color.parseColor("#11000000"));
+        Picasso.with(imageView.getContext()).load(backdropUri).into(imageView);
+        imageView.setBackgroundColor(Color.parseColor("#11000000"));
         movieDetailsView.setMovie(movie);
         ratingView.setRating(movie.getVotes() / 2);
 
