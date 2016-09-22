@@ -46,10 +46,8 @@ public class MovieDetailsView extends ScrollView {
     }
 
     private void setupChildren() {
-
         mDescriptionTextView = (TextView) findViewById(R.id.overview);
         mImageView = (ImageView) findViewById(R.id.movie_large_image);
-
     }
 
     public void hideSimilarMovieLink() {
@@ -57,7 +55,6 @@ public class MovieDetailsView extends ScrollView {
     }
 
     public void setMovie(Movie movie) {
-
         mDescriptionTextView.setText(movie.getOverview());
         final Uri posterUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
@@ -70,10 +67,9 @@ public class MovieDetailsView extends ScrollView {
                 Dialog d = new Dialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
                 d.setCancelable(true);
                 d.setContentView(R.layout.dialogbrand_layout);
-                ImageView myImage = (ImageView) d.findViewById(R.id.imageView1);
-                Picasso.with(myImage.getContext()).load(posterUri).into(myImage);
+                ImageView posterImage = (ImageView) d.findViewById(R.id.imageView1);
+                Picasso.with(mContext).load(posterUri).into(posterImage);
                 d.show();
-
             }
         });
     }
