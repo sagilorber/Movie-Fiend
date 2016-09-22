@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
             Toast.makeText(this, "Server error... :(", Toast.LENGTH_LONG).show();
             return;
         }
-        checkDeepLink(getIntent(),data);
+        //checkDeepLink(getIntent(),data);
         mAdapter = new CardAdapter(data,this);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -71,23 +71,23 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        checkDeepLink(intent,mAdapter.getMovieList());
+        //checkDeepLink(intent,mAdapter.getMovieList());
     }
 
-    private void checkDeepLink(Intent intent,List <Movie> data) {
-        if (intent.getData() != null && intent.getData().getLastPathSegment().contains("-")) {
-            String[] parts = intent.getData().getLastPathSegment().split("-");
-            int deepLinkMovieId = Integer.parseInt(parts[0]);
-            for (int i = 0; i < data.size(); i++) {
-                if (data.get(i).getId() == deepLinkMovieId) {
-                    Intent intent2 = new Intent(this, MovieDetailActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable(MovieDetailActivity.EXTRA_MOVIE, data.get(i));
-                    intent2.putExtras(b);
-                    startActivity(intent2);
-                    break;
-                }
-            }
-        }
-    }
+//    private void checkDeepLink(Intent intent,List <Movie> data) {
+//        if (intent.getData() != null && intent.getData().getLastPathSegment().contains("-")) {
+//            String[] parts = intent.getData().getLastPathSegment().split("-");
+//            int deepLinkMovieId = Integer.parseInt(parts[0]);
+//            for (int i = 0; i < data.size(); i++) {
+//                if (data.get(i).getId() == deepLinkMovieId) {
+//                    Intent intent2 = new Intent(this, MovieDetailActivity.class);
+//                    Bundle b = new Bundle();
+//                    b.putParcelable(MovieDetailActivity.EXTRA_MOVIE, data.get(i));
+//                    intent2.putExtras(b);
+//                    startActivity(intent2);
+//                    break;
+//                }
+//            }
+//        }
+//    }
 }

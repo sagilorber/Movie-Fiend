@@ -53,8 +53,34 @@ public class TMDBApi {
         queue.add(getRequest);
 
     }
+    public void getMovieDetails(Context context, String url, final SingleMovieListener listener) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson g = new Gson();
+                        Movie movie = g.fromJson(response.toString(), Movie.class);
+                        listener.onMovieFetched(movie);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Log.d("Error.Response", error.toString());
+                        listener.onMovieFetched(null);
+                    }
+                }
+        );
+        queue.add(getRequest);
+
+    }
 
     public interface Listener {
         void onMoviesFetched(List<Movie> response);
+    }
+    public interface SingleMovieListener {
+        void onMovieFetched(Movie response);
     }
 }
