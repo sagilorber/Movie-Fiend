@@ -1,5 +1,6 @@
 package com.example.slorber.moviefiend;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.github.ornolfr.ratingview.RatingView;
+
 import com.squareup.picasso.Picasso;
 
 /**
@@ -26,7 +27,7 @@ public class MovieDetailsView extends ScrollView {
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private TextView mDescriptionTextView;
     private ImageView mImageView;
-    private RatingView mStar;
+    private Context mContext;
 
 
     public MovieDetailsView(Context c) {
@@ -39,15 +40,14 @@ public class MovieDetailsView extends ScrollView {
 
     public MovieDetailsView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mContext = context;
         LayoutInflater.from(context).inflate(R.layout.movie_details_child, this, true);
         setupChildren();
     }
 
     private void setupChildren() {
-
         mDescriptionTextView = (TextView) findViewById(R.id.overview);
         mImageView = (ImageView) findViewById(R.id.movie_large_image);
-        mStar = (RatingView) findViewById(R.id.movie_star);
     }
 
     public void hideSimilarMovieLink() {
@@ -55,14 +55,23 @@ public class MovieDetailsView extends ScrollView {
     }
 
     public void setMovie(Movie movie) {
-
         mDescriptionTextView.setText(movie.getOverview());
-        mStar.setRating(movie.getVotes() / 2);
-        final Uri PosterUri = Uri.parse(IMAGE_URL)
+        final Uri posterUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
                 .appendEncodedPath(movie.getPosterPath())
                 .build();
-        Picasso.with(mImageView.getContext()).load(PosterUri).into(mImageView);
+        Picasso.with(mImageView.getContext()).load(posterUri).into(mImageView);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog d = new Dialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                d.setCancelable(true);
+                d.setContentView(R.layout.dialogbrand_layout);
+                ImageView posterImage = (ImageView) d.findViewById(R.id.imageView1);
+                Picasso.with(mContext).load(posterUri).into(posterImage);
+                d.show();
+            }
+        });
     }
 
     public ImageView getImageView() {

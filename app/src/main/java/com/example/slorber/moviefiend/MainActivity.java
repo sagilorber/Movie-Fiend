@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        return new GetMoviesLoader(this,Uri.parse(URL)
+        return new GetMoviesLoader(this, Uri.parse(URL)
                 .buildUpon()
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build().toString());
