@@ -17,6 +17,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -99,13 +100,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private void checkDeepLink(Intent intent) {
         if (intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA) != null) {
             Uri extraUri = Uri.parse(intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA));
-            if (extraUri.getLastPathSegment().contains("-")) {
+            if (extraUri.getLastPathSegment().contains("-") && TextUtils.isDigitsOnly(extraUri.getLastPathSegment().split("-")[0])) {
                 String[] parts = extraUri.getLastPathSegment().split("-");
+
                 int deepLinkMovieId = Integer.parseInt(parts[0]);
                 Bundle b = new Bundle();
                 b.putInt(EXTRA_ID, deepLinkMovieId);
                 getSupportLoaderManager().initLoader(0, b, this);
             }
+            else
+                finish();
         }
     }
     private void setMovie(Movie movie) {
