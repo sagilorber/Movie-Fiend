@@ -97,12 +97,15 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     }
 
     private void checkDeepLink(Intent intent) {
-        if (intent.getData() != null && intent.getData().getLastPathSegment().contains("-")) {
-            String[] parts = intent.getData().getLastPathSegment().split("-");
-            int deepLinkMovieId = Integer.parseInt(parts[0]);
-            Bundle b = new Bundle();
-            b.putInt(EXTRA_ID, deepLinkMovieId);
-            getSupportLoaderManager().initLoader(0, b, this);
+        if (intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA) != null) {
+            Uri extraUri = Uri.parse(intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA));
+            if (extraUri.getLastPathSegment().contains("-")) {
+                String[] parts = extraUri.getLastPathSegment().split("-");
+                int deepLinkMovieId = Integer.parseInt(parts[0]);
+                Bundle b = new Bundle();
+                b.putInt(EXTRA_ID, deepLinkMovieId);
+                getSupportLoaderManager().initLoader(0, b, this);
+            }
         }
     }
     private void setMovie(Movie movie) {
@@ -117,19 +120,19 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         movieDetailsView.setMovie(mMovie);
         ratingView.setRating(mMovie.getVotes() / 2);
     }
-    @Override
-    public void onBackPressed()
-    {
-        if (launchedFromDeepLink)
-        {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            finish();
-        }
-        else
-        {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed()
+//    {
+//        if (launchedFromDeepLink)
+//        {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//            startActivity(intent);
+//            finish();
+//        }
+//        else
+//        {
+//            super.onBackPressed();
+//        }
+//    }
 }
