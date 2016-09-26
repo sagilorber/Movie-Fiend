@@ -79,6 +79,7 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
             });
             ((AppCompatActivity) getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
             if (mDeepLink != null) {
                 checkDeepLink();
             } else {
@@ -154,6 +155,7 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
 
     public void setMovie(Movie movie) {
         mMovie = movie;
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mMovie.getTitle());
         Uri backdropUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
