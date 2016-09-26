@@ -36,26 +36,24 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     public static final String EXTRA_MOVIE = "Movie";
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private Movie mMovie;
-    private RatingView ratingView;
-    private MovieDetailsView movieDetailsView;
-    private ImageView imageView;
-    private boolean launchedFromDeepLink = false;
+    private RatingView mRatingView;
+    private MovieDetailsView mMovieDetailsView;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        imageView = (ImageView) findViewById(R.id.movie_image);
-        movieDetailsView = (MovieDetailsView) findViewById(R.id.movie_details_view);
-        ratingView = (RatingView) findViewById(R.id.rating_view);
+        mImageView = (ImageView) findViewById(R.id.movie_image);
+        mMovieDetailsView = (MovieDetailsView) findViewById(R.id.movie_details_view);
+        mRatingView = (RatingView) findViewById(R.id.rating_view);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null) {
             setMovie((Movie) getIntent().getExtras().getParcelable(EXTRA_MOVIE));
-
         } else {
             checkDeepLink(getIntent());
-            launchedFromDeepLink = true;
         }
 
     }
@@ -72,9 +70,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
                 .buildUpon()
                 .appendPath("3")
                 .appendPath("movie")
-                .appendPath(String.valueOf(args.get(EXTRA_ID)))
+                .appendPath(args.getString(EXTRA_ID))
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
-                .build().toString());
+                .build());
     }
 
     @Override
@@ -102,41 +100,27 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             Uri extraUri = Uri.parse(intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA));
             if (extraUri.getLastPathSegment().contains("-") && TextUtils.isDigitsOnly(extraUri.getLastPathSegment().split("-")[0])) {
                 String[] parts = extraUri.getLastPathSegment().split("-");
-
-                int deepLinkMovieId = Integer.parseInt(parts[0]);
+                String deepLinkMovieId = parts[0];
                 Bundle b = new Bundle();
-                b.putInt(EXTRA_ID, deepLinkMovieId);
+                b.putString(EXTRA_ID, deepLinkMovieId);
                 getSupportLoaderManager().initLoader(0, b, this);
             }
-            else
+            else{
                 finish();
+            }
         }
     }
     private void setMovie(Movie movie) {
         mMovie = movie;
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(mMovie.getTitle());
         Uri backdropUri = Uri.parse(IMAGE_URL)
                 .buildUpon()
                 .appendEncodedPath(mMovie.getBackdropPath() != null ? mMovie.getBackdropPath() : mMovie.getPosterPath())
                 .build();
-        Picasso.with(imageView.getContext()).load(backdropUri).into(imageView);
-        imageView.setBackgroundColor(Color.parseColor("#11000000"));
-        movieDetailsView.setMovie(mMovie);
-        ratingView.setRating(mMovie.getVotes() / 2);
+        Picasso.with(mImageView.getContext()).load(backdropUri).into(mImageView);
+        mImageView.setBackgroundColor(Color.parseColor("#11000000"));
+        mMovieDetailsView.setMovie(mMovie);
+        mRatingView.setRating(mMovie.getVotes() / 2);
     }
-//    @Override
-//    public void onBackPressed()
-//    {
-//        if (launchedFromDeepLink)
-//        {
-//            Intent intent = new Intent(this, MainActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//            startActivity(intent);
-//            finish();
-//        }
-//        else
-//        {
-//            super.onBackPressed();
-//        }
-//    }
 }

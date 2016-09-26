@@ -1,6 +1,7 @@
 package com.example.slorber.moviefiend;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class TMDBApi {
 
     private static TMDBApi sInstance = new TMDBApi();
+    private Gson mGson = new Gson();
 
     public static TMDBApi getHelper() {
         return sInstance;
@@ -36,15 +38,14 @@ public class TMDBApi {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Gson g = new Gson();
-                        MovieContainer mc = g.fromJson(response.toString(), MovieContainer.class);
+
+                        MovieContainer mc = mGson.fromJson(response.toString(), MovieContainer.class);
                         listener.onMoviesFetched(mc.getMovies());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         Log.d("Error.Response", error.toString());
                         listener.onMoviesFetched(null);
                     }
@@ -53,21 +54,19 @@ public class TMDBApi {
         queue.add(getRequest);
 
     }
-    public void getMovieDetails(Context context, String url, final SingleMovieListener listener) {
+    public void getMovieDetails(Context context, Uri uri, final SingleMovieListener listener) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, uri.toString(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Gson g = new Gson();
-                        Movie movie = g.fromJson(response.toString(), Movie.class);
+                        Movie movie = mGson.fromJson(response.toString(), Movie.class);
                         listener.onMovieFetched(movie);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         Log.d("Error.Response", error.toString());
                         listener.onMovieFetched(null);
                     }

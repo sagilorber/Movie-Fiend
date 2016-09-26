@@ -12,6 +12,7 @@
 package com.example.slorber.moviefiend;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.Loader;
 
 import java.util.List;
@@ -24,11 +25,11 @@ import java.util.List;
 public class GetMovieDetailLoader extends Loader<Movie> implements TMDBApi.SingleMovieListener {
 
     private Movie mMovie;
-    private String mUrl;
+    private Uri mUri;
 
-    public GetMovieDetailLoader(Context context, String url) {
+    public GetMovieDetailLoader(Context context, Uri uri) {
         super(context);
-        mUrl = url;
+        mUri = uri;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class GetMovieDetailLoader extends Loader<Movie> implements TMDBApi.Singl
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        TMDBApi.getHelper().getMovieDetails(getContext(), mUrl, this);
+        TMDBApi.getHelper().getMovieDetails(getContext(), mUri, this);
     }
 
     @Override
