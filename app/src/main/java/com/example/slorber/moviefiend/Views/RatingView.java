@@ -9,32 +9,22 @@
  * PARTICULAR PURPOSE.
  */
 
-package com.example.slorber.moviefiend;
+package com.example.slorber.moviefiend.Views;
 
 import android.animation.ObjectAnimator;
-import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.media.Rating;
-import android.net.Uri;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.StringTokenizer;
+import com.example.slorber.moviefiend.R;
 
 /**
  * TODO: Write Javadoc for RatingView.

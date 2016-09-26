@@ -1,4 +1,4 @@
-package com.example.slorber.moviefiend;
+package com.example.slorber.moviefiend.Models;
 
 import java.util.List;
 

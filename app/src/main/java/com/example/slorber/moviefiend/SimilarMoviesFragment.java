@@ -2,6 +2,7 @@ package com.example.slorber.moviefiend;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
@@ -10,50 +11,73 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
+import com.example.slorber.moviefiend.Loaders.GetMoviesLoader;
+import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.Views.MovieDetailsView;
 
 import java.util.List;
-import java.util.Locale;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class SimilarMoviesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
+public class SimilarMoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
     public static final String EXTRA_ID = "id";
     private static final String URL = "http://api.themoviedb.org";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private CircleIndicator mIndicator;
+    private ViewFlipper mViewFlipper;
+    private int mId;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_similar_movies);
-        mPager = (ViewPager) findViewById(R.id.view_pager);
-        mIndicator = (CircleIndicator) findViewById(R.id.indicator);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportLoaderManager().initLoader(1, null, this);
+    public SimilarMoviesFragment() {
+    }
 
+    public static SimilarMoviesFragment newInstance(int id) {
+        SimilarMoviesFragment fragment = new SimilarMoviesFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_ID, id);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mId = getArguments().getInt(EXTRA_ID);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view =  inflater.inflate(R.layout.activity_similar_movies, container, false);
+        mPager = (ViewPager) view.findViewById(R.id.view_pager);
+        mIndicator = (CircleIndicator) view.findViewById(R.id.indicator);
+        mViewFlipper = (ViewFlipper) view.findViewById(R.id.view_flipper);
+        ((AppCompatActivity)getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity().getSupportLoaderManager().initLoader(mId, null, this);
+        return view;
+    }
+
+    public void setId(int id){
+        mId = id;
+        getActivity().getSupportLoaderManager().initLoader(mId, null, this);
+    }
+    @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        return new GetMoviesLoader(this, Uri.parse(URL)
+        return new GetMoviesLoader(getActivity(), Uri.parse(URL)
                 .buildUpon()
                 .appendPath("3")
                 .appendPath("movie")
-                .appendPath(String.valueOf(getIntent().getIntExtra(EXTRA_ID, 0)))
+                .appendPath(String.valueOf(mId))
                 .appendPath("similar")
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
                 .build().toString());
@@ -62,13 +86,13 @@ public class SimilarMoviesActivity extends AppCompatActivity implements LoaderMa
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         if (data == null) {
-            Toast.makeText(this, "Server error... :(", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Server error... :(", Toast.LENGTH_LONG).show();
             return;
         } else if (data.size() == 0) {
-            ((ViewFlipper) findViewById(R.id.view_flipper)).showNext();
+            mViewFlipper.showNext();
             return;
         }
-        mPagerAdapter = new ScreenSlidePagerAdapter(this, data);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getActivity(), data);
         mPager.setAdapter(mPagerAdapter);
         mIndicator.setViewPager(mPager);
     }

@@ -1,20 +1,19 @@
-package com.example.slorber.moviefiend;
+package com.example.slorber.moviefiend.Adapters;
 
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.R;
 import com.github.ornolfr.ratingview.RatingView;
 import com.squareup.picasso.Picasso;
 

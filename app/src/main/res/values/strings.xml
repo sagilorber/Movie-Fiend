@@ -3,4 +3,7 @@
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
     <string name="tmdb_api_key">f8546d2d948cd245e6cdb9d4332e6ca6</string>
     <string name="similar_movies_link"><u>Similar movies</u></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

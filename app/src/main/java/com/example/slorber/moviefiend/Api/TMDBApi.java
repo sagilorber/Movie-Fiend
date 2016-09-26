@@ -1,7 +1,6 @@
-package com.example.slorber.moviefiend;
+package com.example.slorber.moviefiend.Api;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -10,6 +9,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.Models.MovieContainer;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;

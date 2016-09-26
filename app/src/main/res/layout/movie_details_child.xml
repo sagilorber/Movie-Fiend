@@ -30,8 +30,6 @@
             android:padding="8dp"
             android:gravity="center"
             android:id="@+id/similar_movies_label"
-            android:onClick="onSimilarMoviesLabelClick"
-            android:clickable="true"
             android:text="@string/similar_movies_link"/>
     </LinearLayout>
 </merge>

@@ -9,34 +9,33 @@
  * PARTICULAR PURPOSE.
  */
 
-package com.example.slorber.moviefiend;
+package com.example.slorber.moviefiend.Loaders;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v4.content.Loader;
 
-import java.util.List;
+import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.Api.TMDBApi;
 
 /**
- * This Loader handles network calls.
- * it gets a url and issue a request to TMDBApi and handles its response.
+ * TODO: Write Javadoc for GetMovieDetailLoader.
  *
  * @author slorber
  */
-public class GetMoviesLoader extends Loader<List<Movie>> implements TMDBApi.Listener {
+public class GetMovieDetailLoader extends Loader<Movie> implements TMDBApi.SingleMovieListener {
 
-    private List<Movie> mMovieList;
+    private Movie mMovie;
     private String mUrl;
 
-    public GetMoviesLoader(Context context, String url) {
+    public GetMovieDetailLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
 
     @Override
     protected void onStartLoading() {
-        if (mMovieList != null) {
-            deliverResult(mMovieList);
+        if (mMovie != null) {
+            deliverResult(mMovie);
         } else {
             forceLoad();
         }
@@ -45,17 +44,17 @@ public class GetMoviesLoader extends Loader<List<Movie>> implements TMDBApi.List
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        TMDBApi.getHelper().getRequest(getContext(), mUrl, this);
+        TMDBApi.getHelper().getMovieDetails(getContext(), mUrl, this);
     }
 
     @Override
-    public void deliverResult(List<Movie> list) {
-        mMovieList = list;
-        super.deliverResult(list);
+    public void deliverResult(Movie movie) {
+        mMovie = movie;
+        super.deliverResult(movie);
     }
 
     @Override
-    public void onMoviesFetched(List<Movie> response) {
+    public void onMovieFetched(Movie response) {
         deliverResult(response);
     }
 }

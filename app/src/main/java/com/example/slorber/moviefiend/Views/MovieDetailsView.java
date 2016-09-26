@@ -1,19 +1,18 @@
-package com.example.slorber.moviefiend;
+package com.example.slorber.moviefiend.Views;
 
 import android.app.Dialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 
+import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.R;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -26,6 +25,7 @@ public class MovieDetailsView extends ScrollView {
 
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private TextView mDescriptionTextView;
+    private TextView mSimilarTextView;
     private ImageView mImageView;
     private Context mContext;
 
@@ -47,11 +47,12 @@ public class MovieDetailsView extends ScrollView {
 
     private void setupChildren() {
         mDescriptionTextView = (TextView) findViewById(R.id.overview);
+        mSimilarTextView = (TextView) findViewById(R.id.similar_movies_label);
         mImageView = (ImageView) findViewById(R.id.movie_large_image);
     }
 
     public void hideSimilarMovieLink() {
-        ((TextView) findViewById(R.id.similar_movies_label)).setVisibility(View.GONE);
+        mSimilarTextView.setVisibility(View.GONE);
     }
 
     public void setMovie(Movie movie) {
@@ -78,8 +79,11 @@ public class MovieDetailsView extends ScrollView {
         return mImageView;
     }
 
-
     public TextView getDescriptionTextView() {
         return mDescriptionTextView;
+    }
+
+    public TextView getSimilarTextView() {
+        return mSimilarTextView;
     }
 }
