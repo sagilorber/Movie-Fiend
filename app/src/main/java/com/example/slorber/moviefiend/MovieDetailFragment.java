@@ -39,6 +39,7 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
     private MovieDetailsView movieDetailsView;
     private ImageView imageView;
     private OnSimilarMovieClickListener mListener;
+    private View view;
 
     public MovieDetailFragment() {
     }
@@ -59,29 +60,32 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
             mMovie = getArguments().getParcelable(MOVIE_PARAM);
             mDeepLink = getArguments().getString(DEEPLINK_PARAM);
         }
-        
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_movie_detail, container, false);
-        imageView = (ImageView) view.findViewById(R.id.movie_image);
-        movieDetailsView = (MovieDetailsView) view.findViewById(R.id.movie_details_view);
-        ratingView = (RatingView) view.findViewById(R.id.rating_view);
-        movieDetailsView.getSimilarTextView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onSimilarMovieClick(mMovie.getId());
+        if (view == null) {
+            view = inflater.inflate(R.layout.activity_movie_detail, container, false);
+            imageView = (ImageView) view.findViewById(R.id.movie_image);
+            movieDetailsView = (MovieDetailsView) view.findViewById(R.id.movie_details_view);
+            ratingView = (RatingView) view.findViewById(R.id.rating_view);
+            movieDetailsView.getSimilarTextView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onSimilarMovieClick(mMovie.getId());
+                }
+            });
+            ((AppCompatActivity) getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            if (mDeepLink != null) {
+                checkDeepLink();
+            } else {
+                setMovie(mMovie);
             }
-        });
-        ((AppCompatActivity) getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (mDeepLink != null) {
-            checkDeepLink();
-        } else {
-            setMovie(mMovie);
         }
+
         return view;
     }
 
@@ -131,12 +135,20 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
         Uri extraUri = Uri.parse(mDeepLink);
         if (extraUri.getLastPathSegment().contains("-") && TextUtils.isDigitsOnly(extraUri.getLastPathSegment().split("-")[0])) {
             String[] parts = extraUri.getLastPathSegment().split("-");
-
             int deepLinkMovieId = Integer.parseInt(parts[0]);
+            getActivity().getSupportLoaderManager().destroyLoader(deepLinkMovieId);
             Bundle b = new Bundle();
             b.putInt(EXTRA_ID, deepLinkMovieId);
-            getActivity().getSupportLoaderManager().initLoader(0, b, this);
+            getActivity().getSupportLoaderManager().initLoader(deepLinkMovieId, b, this);
+        } else {
+            Toast.makeText(getActivity(), "Movie id not found", Toast.LENGTH_LONG).show();
         }
+
+    }
+
+    public void setDeepLink(String deepLink) {
+        mDeepLink = deepLink;
+        checkDeepLink();
 
     }
 

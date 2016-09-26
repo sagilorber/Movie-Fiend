@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -19,18 +18,18 @@ import com.example.slorber.moviefiend.Models.Movie;
 
 import java.util.List;
 
-public class AiringNowFragment extends Fragment  implements  LoaderManager.LoaderCallbacks<List<Movie>>{
+public class AiringTodayFragment extends Fragment  implements  LoaderManager.LoaderCallbacks<List<Movie>>{
 
     private static final String URL = "http://api.themoviedb.org/3/movie/now_playing";
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private CardAdapter mAdapter;
 
-    public AiringNowFragment() {
+    public AiringTodayFragment() {
     }
 
-    public static AiringNowFragment newInstance() {
-        return new AiringNowFragment();
+    public static AiringTodayFragment newInstance() {
+        return new AiringTodayFragment();
     }
 
     @Override
