@@ -40,7 +40,7 @@
                 android:value=".MovieDetailActivity"/>
         </activity>
         <activity android:name=".DeepLinkHandlerActivity"
-                  android:theme="@android:style/Theme.NoDisplay">
+                  android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 

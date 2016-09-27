@@ -67,8 +67,4 @@ public class MainActivity extends AppCompatActivity implements CardAdapter.OnCar
     public void onLoaderReset(Loader<List<Movie>> loader) {
 
     }
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
 }

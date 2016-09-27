@@ -29,10 +29,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie> {
+public class MovieDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ID = "id";
-    private static final String URL = "http://api.themoviedb.org";
+
     public static final String EXTRA_MOVIE = "Movie";
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500/";
     private Movie mMovie;
@@ -52,8 +51,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null) {
             setMovie((Movie) getIntent().getExtras().getParcelable(EXTRA_MOVIE));
-        } else {
-            checkDeepLink(getIntent());
         }
 
     }
@@ -64,52 +61,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         startActivity(intent);
     }
 
-    @Override
-    public Loader<Movie> onCreateLoader(int id, Bundle args) {
-        return new GetMovieDetailLoader(this, Uri.parse(URL)
-                .buildUpon()
-                .appendPath("3")
-                .appendPath("movie")
-                .appendPath(args.getString(EXTRA_ID))
-                .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
-                .build());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Movie> loader, Movie data) {
-        if (data == null) {
-            Toast.makeText(this, "Server error... :(", Toast.LENGTH_LONG).show();
-            return;
-        }
-        setMovie(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Movie> loader) {
-
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        checkDeepLink(intent);
-    }
-
-    private void checkDeepLink(Intent intent) {
-        if (intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA) != null) {
-            Uri extraUri = Uri.parse(intent.getStringExtra(DeepLinkHandlerActivity.DEEPLINKEXTRA));
-            if (extraUri.getLastPathSegment().contains("-") && TextUtils.isDigitsOnly(extraUri.getLastPathSegment().split("-")[0])) {
-                String[] parts = extraUri.getLastPathSegment().split("-");
-                String deepLinkMovieId = parts[0];
-                Bundle b = new Bundle();
-                b.putString(EXTRA_ID, deepLinkMovieId);
-                getSupportLoaderManager().initLoader(0, b, this);
-            }
-            else{
-                finish();
-            }
-        }
-    }
     private void setMovie(Movie movie) {
         mMovie = movie;
         getSupportActionBar().setDisplayShowTitleEnabled(true);
