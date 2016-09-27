@@ -52,6 +52,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         return mDataset.size();
     }
 
+    public List<Movie> getMovieList() {
+        return mDataset;
+    }
+
     public interface OnCardClickListener {
         void onCardClick(Movie movie);
     }
