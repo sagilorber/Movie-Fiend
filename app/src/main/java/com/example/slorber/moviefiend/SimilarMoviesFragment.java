@@ -56,21 +56,21 @@ public class SimilarMoviesFragment extends Fragment implements LoaderManager.Loa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_similar_movies, container, false);
+        View view = inflater.inflate(R.layout.activity_similar_movies, container, false);
         mPager = (ViewPager) view.findViewById(R.id.view_pager);
         mIndicator = (CircleIndicator) view.findViewById(R.id.indicator);
         mViewFlipper = (ViewFlipper) view.findViewById(R.id.view_flipper);
-        ((AppCompatActivity)getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getActivity().getSupportLoaderManager().initLoader(mId, null, this);
         return view;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         mId = id;
         getActivity().getSupportLoaderManager().initLoader(mId, null, this);
     }
+
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         return new GetMoviesLoader(getActivity(), Uri.parse(URL)
@@ -80,7 +80,7 @@ public class SimilarMoviesFragment extends Fragment implements LoaderManager.Loa
                 .appendPath(String.valueOf(mId))
                 .appendPath("similar")
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
-                .build().toString());
+                .build());
     }
 
     @Override

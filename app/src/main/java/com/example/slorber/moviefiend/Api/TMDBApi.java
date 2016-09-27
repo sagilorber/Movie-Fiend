@@ -1,6 +1,7 @@
 package com.example.slorber.moviefiend.Api;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ import java.util.List;
 public class TMDBApi {
 
     private static TMDBApi sInstance = new TMDBApi();
+    private Gson mGson = new Gson();
 
     public static TMDBApi getHelper() {
         return sInstance;
@@ -31,37 +33,34 @@ public class TMDBApi {
     private TMDBApi() {
     }
 
-    public void getRequest(Context context, String url, final Listener listener) {
+    public void getRequest(Context context, Uri url, final Listener listener) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url.toString(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Gson g = new Gson();
-                        MovieContainer mc = g.fromJson(response.toString(), MovieContainer.class);
+                        MovieContainer mc = mGson.fromJson(response.toString(), MovieContainer.class);
                         listener.onMoviesFetched(mc.getMovies());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         Log.d("Error.Response", error.toString());
                         listener.onMoviesFetched(null);
                     }
                 }
         );
         queue.add(getRequest);
-
     }
-    public void getMovieDetails(Context context, String url, final SingleMovieListener listener) {
+
+    public void getMovieDetails(Context context, Uri url, final SingleMovieListener listener) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url.toString(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Gson g = new Gson();
-                        Movie movie = g.fromJson(response.toString(), Movie.class);
+                        Movie movie = mGson.fromJson(response.toString(), Movie.class);
                         listener.onMovieFetched(movie);
                     }
                 },
@@ -75,12 +74,12 @@ public class TMDBApi {
                 }
         );
         queue.add(getRequest);
-
     }
 
     public interface Listener {
         void onMoviesFetched(List<Movie> response);
     }
+
     public interface SingleMovieListener {
         void onMovieFetched(Movie response);
     }

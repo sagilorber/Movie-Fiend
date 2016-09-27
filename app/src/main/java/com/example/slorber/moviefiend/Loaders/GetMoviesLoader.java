@@ -12,6 +12,7 @@
 package com.example.slorber.moviefiend.Loaders;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.Loader;
 
 import com.example.slorber.moviefiend.Models.Movie;
@@ -28,9 +29,9 @@ import java.util.List;
 public class GetMoviesLoader extends Loader<List<Movie>> implements TMDBApi.Listener {
 
     private List<Movie> mMovieList;
-    private String mUrl;
+    private Uri mUrl;
 
-    public GetMoviesLoader(Context context, String url) {
+    public GetMoviesLoader(Context context, Uri url) {
         super(context);
         mUrl = url;
     }

@@ -18,7 +18,7 @@ import com.example.slorber.moviefiend.Models.Movie;
 
 import java.util.List;
 
-public class AiringTodayFragment extends Fragment  implements  LoaderManager.LoaderCallbacks<List<Movie>>{
+public class AiringTodayFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
     private static final String URL = "http://api.themoviedb.org/3/movie/now_playing";
     private RecyclerView mRecyclerView;
@@ -50,8 +50,8 @@ public class AiringTodayFragment extends Fragment  implements  LoaderManager.Loa
         return view;
     }
 
-    public void setMovies(List<Movie> movies){
-        mAdapter = new CardAdapter(movies,getContext());
+    public void setMovies(List<Movie> movies) {
+        mAdapter = new CardAdapter(movies, getContext());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -60,7 +60,7 @@ public class AiringTodayFragment extends Fragment  implements  LoaderManager.Loa
         return new GetMoviesLoader(getActivity(), Uri.parse(URL)
                 .buildUpon()
                 .appendQueryParameter("api_key", getString(R.string.tmdb_api_key))
-                .build().toString());
+                .build());
     }
 
     @Override

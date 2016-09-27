@@ -29,7 +29,6 @@ public class MovieDetailsView extends ScrollView {
     private ImageView mImageView;
     private Context mContext;
 
-
     public MovieDetailsView(Context c) {
         this(c, null);
     }

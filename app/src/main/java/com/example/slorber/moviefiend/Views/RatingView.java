@@ -39,7 +39,6 @@ public class RatingView extends RelativeLayout {
     public static MovieDetailsView inflate(ViewGroup parent) {
         return (MovieDetailsView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rating_view, parent, false);
-
     }
 
     public RatingView(Context c) {

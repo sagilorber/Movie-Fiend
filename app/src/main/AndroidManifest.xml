@@ -26,7 +26,7 @@
 
                 <data
                     android:host="www.themoviedb.org"
-                    android:pathPattern="/movie/..*"
+                    android:pathPattern="/movie/.*"
                     android:scheme="https"/>
             </intent-filter>
         </activity>
