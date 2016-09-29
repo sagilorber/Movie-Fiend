@@ -11,9 +11,9 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.slorber.moviefiend.Adapters.CardAdapter;
-import com.example.slorber.moviefiend.Loaders.GetMovieDetailLoader;
-import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.adapters.CardAdapter;
+import com.example.slorber.moviefiend.loaders.GetMovieDetailLoader;
+import com.example.slorber.moviefiend.models.Movie;
 
 public class OneActivityToRuleThemAll extends AppCompatActivity implements CardAdapter.OnCardClickListener, MovieDetailFragment.OnSimilarMovieClickListener, LoaderManager.LoaderCallbacks<Movie> {
 
@@ -78,7 +78,7 @@ public class OneActivityToRuleThemAll extends AppCompatActivity implements CardA
             getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
-                    .add(R.id.container, firstFragment, MAIN_FRAGMENT_TAG)
+                    .replace(R.id.container, firstFragment, MAIN_FRAGMENT_TAG)
                     .commit();
         }
     }

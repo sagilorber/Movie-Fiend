@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.example.slorber.moviefiend.Loaders.GetMoviesLoader;
-import com.example.slorber.moviefiend.Models.Movie;
-import com.example.slorber.moviefiend.Views.MovieDetailsView;
+import com.example.slorber.moviefiend.loaders.GetMoviesLoader;
+import com.example.slorber.moviefiend.models.Movie;
+import com.example.slorber.moviefiend.views.MovieDetailsView;
 
 import java.util.List;
 

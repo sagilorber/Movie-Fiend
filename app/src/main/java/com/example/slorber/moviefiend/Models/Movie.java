@@ -1,4 +1,4 @@
-package com.example.slorber.moviefiend.Models;
+package com.example.slorber.moviefiend.models;
 
 
 import android.os.Parcel;

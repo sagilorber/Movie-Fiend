@@ -1,4 +1,4 @@
-package com.example.slorber.moviefiend.Views;
+package com.example.slorber.moviefiend.views;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 
-import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.models.Movie;
 import com.example.slorber.moviefiend.R;
 import com.squareup.picasso.Picasso;
 

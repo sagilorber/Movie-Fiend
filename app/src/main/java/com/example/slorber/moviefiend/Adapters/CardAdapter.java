@@ -1,4 +1,4 @@
-package com.example.slorber.moviefiend.Adapters;
+package com.example.slorber.moviefiend.adapters;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.models.Movie;
 import com.example.slorber.moviefiend.R;
 import com.github.ornolfr.ratingview.RatingView;
 import com.squareup.picasso.Picasso;

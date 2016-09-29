@@ -1,28 +1,20 @@
 package com.example.slorber.moviefiend;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.slorber.moviefiend.Loaders.GetMovieDetailLoader;
-import com.example.slorber.moviefiend.Models.Movie;
-import com.example.slorber.moviefiend.Views.MovieDetailsView;
-import com.example.slorber.moviefiend.Views.RatingView;
+import com.example.slorber.moviefiend.models.Movie;
+import com.example.slorber.moviefiend.views.MovieDetailsView;
+import com.example.slorber.moviefiend.views.RatingView;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailFragment extends Fragment {
@@ -83,12 +75,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnSimilarMovieClickListener) {
             mListener = (OnSimilarMovieClickListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override

@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.slorber.moviefiend.Adapters.CardAdapter;
-import com.example.slorber.moviefiend.Loaders.GetMoviesLoader;
-import com.example.slorber.moviefiend.Models.Movie;
+import com.example.slorber.moviefiend.adapters.CardAdapter;
+import com.example.slorber.moviefiend.loaders.GetMoviesLoader;
+import com.example.slorber.moviefiend.models.Movie;
 
 import java.util.List;
 
@@ -35,8 +35,6 @@ public class AiringTodayFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -46,7 +44,7 @@ public class AiringTodayFragment extends Fragment implements LoaderManager.Loade
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        getActivity().getSupportLoaderManager().initLoader(0, null, this);
+        this.getLoaderManager().initLoader(0, null, this);
         return view;
     }
 

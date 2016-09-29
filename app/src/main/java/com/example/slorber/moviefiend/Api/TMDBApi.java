@@ -1,4 +1,4 @@
-package com.example.slorber.moviefiend.Api;
+package com.example.slorber.moviefiend.api;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,8 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.slorber.moviefiend.Models.Movie;
-import com.example.slorber.moviefiend.Models.MovieContainer;
+import com.example.slorber.moviefiend.models.Movie;
+import com.example.slorber.moviefiend.models.MovieContainer;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;

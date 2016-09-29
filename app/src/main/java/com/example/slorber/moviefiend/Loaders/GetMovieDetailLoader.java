@@ -9,14 +9,14 @@
  * PARTICULAR PURPOSE.
  */
 
-package com.example.slorber.moviefiend.Loaders;
+package com.example.slorber.moviefiend.loaders;
 
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.Loader;
 
-import com.example.slorber.moviefiend.Models.Movie;
-import com.example.slorber.moviefiend.Api.TMDBApi;
+import com.example.slorber.moviefiend.models.Movie;
+import com.example.slorber.moviefiend.api.TMDBApi;
 
 /**
  * TODO: Write Javadoc for GetMovieDetailLoader.

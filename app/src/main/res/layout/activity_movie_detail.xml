@@ -59,11 +59,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-            <com.example.slorber.moviefiend.Views.RatingView
+            <com.example.slorber.moviefiend.views.RatingView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rating_view"/>
-            <com.example.slorber.moviefiend.Views.MovieDetailsView
+            <com.example.slorber.moviefiend.views.MovieDetailsView
                 android:id="@+id/movie_details_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

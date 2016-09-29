@@ -9,7 +9,7 @@
  * PARTICULAR PURPOSE.
  */
 
-package com.example.slorber.moviefiend.Views;
+package com.example.slorber.moviefiend.views;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
